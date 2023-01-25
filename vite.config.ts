@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: "http://magland.github.io/figurl-gallery-viewer"
+  base: "https://magland.github.io/figurl-gallery-viewer"
 })
