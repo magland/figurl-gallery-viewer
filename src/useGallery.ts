@@ -21,7 +21,6 @@ const useGallery = () => {
             await R.initialize()
             const e: GalleryExample[] = []
             async function scanMarkdownFile(p: string) {
-                console.log('--- p', p, p.split('/').slice(2).join('/'))
                 const txt = await R.readTextFile(p)
                 const fm = parseFrontMatter(txt.split('\n'))
                 if (fm.title) {
