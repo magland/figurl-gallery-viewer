@@ -22,6 +22,12 @@ class ClonedRepo {
         this.#initializing = true
         const {dir, url} = this.a
         let exists = await checkDirectoryExists(dir)
+        if (exists) {
+            if (!checkValidRepo(dir)) {
+                await removeDirectoryRecursive(this.a.dir)
+                exists = false
+            }
+        }
         if (!exists) {
             console.info(`Cloning ${url} to ${dir}`)
             await git.clone({ fs, http, dir, url, corsProxy: 'https://cors.isomorphic-git.org' })
@@ -56,6 +62,23 @@ class ClonedRepo {
         const a = await fs.promises.readFile(p, 'utf8')
         return a as string
     }
+}
+
+const checkValidRepo = async (dir: string): Promise<boolean> => {
+    if (!(await checkDirectoryExists(`${dir}/.git`))) return false
+    if (!(await checkFileExists(`${dir}/.git/index`))) return false
+    if (!(await checkFileExists(`${dir}/.git/refs/heads/main`))) return false
+    return true
+}
+
+const checkFileExists = async (f: string): Promise<boolean> => {
+	try {
+		const s = await fs.promises.stat(f)
+		return s.isFile()
+	}
+	catch(err) {
+		return false
+	}
 }
 
 const checkDirectoryExists = async (dir: string): Promise<boolean> => {

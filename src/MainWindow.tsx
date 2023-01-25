@@ -11,7 +11,7 @@ const MainWindow: FunctionComponent<Props> = () => {
 	console.log('--- examples', examples)
 	const categories = useMemo(() => (
 		[...new Set(examples.map(e => (e.category)))].sort()
-	), [])
+	), [examples])
 	return (
 		<div>
 			<h1>Figurl gallery</h1>
