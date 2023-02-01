@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { FunctionComponent, useCallback } from "react";
 import { GalleryExample } from "./useGallery";
 
@@ -12,11 +12,12 @@ const ExampleCard: FunctionComponent<Props> = ({ example }) => {
 	}, [])
 	return (
 		<Card sx={{ maxWidth: 300 }}>
-			<CardMedia
-				sx={{ height: 200 }}
-				image={example.image}
-				title={example.title}
-			/>
+			<CardActionArea onClick={handleLearnMore}>
+				<CardMedia
+					sx={{ height: 200 }}
+					image={example.image}
+					title={example.title}
+				/>
 			<CardContent>
 				<Typography gutterBottom variant="h5" component="div">
 					{example.title}
@@ -25,6 +26,7 @@ const ExampleCard: FunctionComponent<Props> = ({ example }) => {
 					{example.description}
 				</Typography>
 			</CardContent>
+			</CardActionArea>
 			<CardActions>
 				<Button disabled={!example.url} onClick={handleLearnMore} size="small">Learn More</Button>
 			</CardActions>

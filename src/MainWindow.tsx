@@ -32,11 +32,12 @@ const MainWindow: FunctionComponent<Props> = () => {
 
 	return (
 		<div>
-			<h1>Figurl gallery</h1>
+			<h1 style={{textAlign: 'center'}}>Figurl gallery</h1>
 			{
 				categories.map(category => (
 					<div key={category} style={{paddingBottom: 30}}>
-						<h2>{titleForCategory(category)}</h2>
+						<hr />
+						<h2 style={{fontSize: 40, color: '#8888cc'}}>{titleForCategory(category)}</h2>
 						<Grid container spacing={3}>
 							{
 								examples.filter(e => (e.category === category)).map(e => (
@@ -44,6 +45,8 @@ const MainWindow: FunctionComponent<Props> = () => {
 								))
 							}
 						</Grid>
+						<div>&nbsp;</div>
+						<div>&nbsp;</div>
 					</div>
 				))
 			}
