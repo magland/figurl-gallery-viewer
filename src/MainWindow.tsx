@@ -14,7 +14,7 @@ const fixedCategories = [
 ]
 
 const MainWindow: FunctionComponent<Props> = () => {
-	const {examples} = useGallery()
+	const {examples, status} = useGallery()
 	console.info('Examples:', examples)
 	const categories = useMemo(() => (
 		[...new Set(examples.map(e => (e.category)))].sort().sort((c1, c2) => {
@@ -34,21 +34,25 @@ const MainWindow: FunctionComponent<Props> = () => {
 		<div>
 			<h1 style={{textAlign: 'center'}}>Figurl gallery</h1>
 			{
-				categories.map(category => (
-					<div key={category} style={{paddingBottom: 30}}>
-						<hr />
-						<h2 style={{fontSize: 40, color: '#8888cc'}}>{titleForCategory(category)}</h2>
-						<Grid container spacing={3}>
-							{
-								examples.filter(e => (e.category === category)).map(e => (
-									<Grid key={e.title} item><ExampleCard example={e} /></Grid>
-								))
-							}
-						</Grid>
-						<div>&nbsp;</div>
-						<div>&nbsp;</div>
-					</div>
-				))
+				status === 'loading' ? (
+					<div>Loading gallery...</div>
+				) : (
+					categories.map(category => (
+						<div key={category} style={{paddingBottom: 30}}>
+							<hr />
+							<h2 style={{fontSize: 40, color: '#8888cc'}}>{titleForCategory(category)}</h2>
+							<Grid container spacing={3}>
+								{
+									examples.filter(e => (e.category === category)).map(e => (
+										<Grid key={e.title} item><ExampleCard example={e} /></Grid>
+									))
+								}
+							</Grid>
+							<div>&nbsp;</div>
+							<div>&nbsp;</div>
+						</div>
+					))
+				)
 			}
 		</div>
 	)

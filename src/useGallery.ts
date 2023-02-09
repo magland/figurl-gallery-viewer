@@ -12,10 +12,14 @@ export type GalleryExample = {
     url: string
 }
 
+export type GalleryStatus = 'waiting' | 'loading' | 'loaded'
+
 const useGallery = () => {
     const [initialized, setInitialized] = useState(false)
+    const [status, setStatus] = useState<GalleryStatus>('waiting')
     const [examples, setExamples] = useState<GalleryExample[]>([])
     useEffect(() => {
+        setStatus('loading')
         ;(async () => {
             // await R.clear()
             await R.initialize()
@@ -47,12 +51,14 @@ const useGallery = () => {
             await scanDirectory('/')
             setExamples(e)
             setInitialized(true)
+            setStatus('loaded')
         })()
     }, [])
 
     return {
         initialized,
-        examples
+        examples,
+        status
     }
 }
 
